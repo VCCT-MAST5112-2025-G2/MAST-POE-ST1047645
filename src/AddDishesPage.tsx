@@ -1,6 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'; 
 import { StyleSheet, Text, View,ScrollView,TouchableOpacity,TextInput, Button } from 'react-native';
+import {  StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = { 
+  App: undefined;
+  AddDishesPage: undefined;
+}; 
+
+type AddDishesPageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'AddDishesPage'>; 
 
 
 export default function AddDishesPage({ navigation }: { navigation: any }) {
