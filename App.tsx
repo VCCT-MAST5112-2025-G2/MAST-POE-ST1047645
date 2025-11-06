@@ -38,7 +38,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={Homepage} />
-        <Tab.Screen name="Add Dishes" component={AddDishesPage} />
+        <Tab.Screen name="Add Dishes" component={AddDishesPage}  />
         <Tab.Screen name="Filter Page" component={FilteredMenuPage} /> 
       </Tab.Navigator>
     </NavigationContainer>

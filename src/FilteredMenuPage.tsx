@@ -1,5 +1,5 @@
  
-import { useDishes, Dish } from './Globalstore'; 
+import { useDishes} from './Globalstore'; 
 import { StyleSheet,ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 

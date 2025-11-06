@@ -18,6 +18,8 @@ const DishContext = createContext<DishContextType | undefined>(undefined);
 export const DishProvider = ({children}: {children: ReactNode}) => {
     const [dishes, setDishes] = useState<Dish[]>([]);
 
+      console.log("✅ DishProvider mounted, current dishes:", dishes);
+
     const addDish = (dish:Dish) => {
         setDishes((prev) => [...prev, dish]);
     }; 
