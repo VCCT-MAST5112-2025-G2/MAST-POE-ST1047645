@@ -5,10 +5,6 @@ import { useDishes } from './Globalstore';
 
 
 
-// will put everything in the addDishPage when it will work 
-
-
-
 export default function Homepage ({ navigation }: { navigation: any }) {
 
   const {dishes, addDish} = useDishes();
@@ -57,7 +53,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   
       <ScrollView>
         <View style={styles.container}>
-          <Text style={styles.WelcomeText}> Welcome, Christofell, let's plan together a well-balanced meal.</Text>
+          <Text style={styles.WelcomeText}> Welcome, Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal.</Text>
 
           <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Click down below to add the dishes</Text> 
   
@@ -142,7 +138,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
           isSelected && styles.selectedDishItem
         ]}
       >
-        <Text style={styles.dishName}>• {dish.name}</Text>
+        <Text style={styles.dishName}>🍽️ {dish.name}</Text> 
         <Text style={styles.dishDescription}>{dish.description}</Text>
         <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text> 
         <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
@@ -180,7 +176,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       fontSize: 15,
       fontWeight: 'bold',
       margin: 10,
-      textAlign: 'center',
+      textAlign: 'center', 
       padding: 30,
     }, 
   
@@ -214,10 +210,6 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  
-  
-  
-  
   
   
     input: {
@@ -269,7 +261,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   courseButtonText: {
     color: '#004aad',
   },
-  
+   // Styling for the selected items after the user input
     dishItem: {
     padding: 15,
     marginVertical: 8,
@@ -279,7 +271,9 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   },
   selectedDishItem: {
    backgroundColor:"#87CEEB", 
-  },
+  }, // End of styling 
+
+  // Styling for the dish cards after the user input 
   dishName: {
     fontWeight: 'bold',
     fontSize: 16,
@@ -296,7 +290,8 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     color: '#004aad',
     fontWeight: '600',
     marginTop: 4,
-  },
+  }, 
+  // End of styling 
   
   
   }

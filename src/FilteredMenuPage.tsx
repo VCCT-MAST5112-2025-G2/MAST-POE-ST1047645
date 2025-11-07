@@ -2,17 +2,16 @@
 import { useDishes} from './Globalstore'; 
 import { StyleSheet,ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
-
-const { dishes, removeDish} = useDishes(); 
-
 export default function FilteredMenuPage({ navigation }: { navigation: any }) {
+
+  const { dishes, removeDish} = useDishes(); 
     return(
 
       <ScrollView style={{ padding: 20 }}>
   <Text style={styles.Title}>Menu</Text>
   
   {dishes.length === 0 ? (
-    <Text>No added dishes yet.</Text>
+    <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20 }} >No added dishes yet.</Text>
   ) : (
     dishes.map((dish, index) => (
       <View key={index} style={styles.card}>
@@ -28,6 +27,8 @@ export default function FilteredMenuPage({ navigation }: { navigation: any }) {
         >
           <Text style={styles.deleteText}>Delete</Text>
         </TouchableOpacity>
+
+        
       </View>
     ))
   )}
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight:'bold',
     padding: 20,
+    textAlign: 'center',
     color: "#004aad",
   }, 
   card: { padding: 15, backgroundColor: '#f0f0f0', marginBottom: 10, borderRadius: 8 },

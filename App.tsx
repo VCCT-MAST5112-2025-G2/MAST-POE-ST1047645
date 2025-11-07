@@ -8,8 +8,6 @@ import Homepage from './src/Homepage';
 import AddDishesPage from './src/AddDishesPage';  
 import FilteredMenuPage from './src/FilteredMenuPage';
 import { DishProvider } from './src/Globalstore';
- 
-
 
 const Tab = createBottomTabNavigator();
 
@@ -22,9 +20,9 @@ export default function App() {
          tabBarIcon: ({ color, size }) => {
           let iconName: string = 'help'; // default fallback icon 
           if (route.name === 'Home') {
-            iconName = 'home';
-          } else if (route.name === 'Add a Dish') { 
-            iconName = 'restaurant';
+            iconName = 'home-outline';
+          } else if (route.name === 'Add Dishes') {  
+            iconName = 'restaurant-outline'; 
           } else if (route.name === 'Filter Page') {
             iconName = 'filter-outline';  
           }
@@ -34,11 +32,11 @@ export default function App() {
  
 
           tabBarActiveTintColor: '#004aad',
-          tabBarInactiveTintColor: 'gray',
+          tabBarInactiveTintColor: 'black', 
         })}
       >
         <Tab.Screen name="Home" component={Homepage} />
-        <Tab.Screen name="Add Dishes" component={AddDishesPage}  />
+        <Tab.Screen name="Add Dishes" component={AddDishesPage}/> 
         <Tab.Screen name="Filter Page" component={FilteredMenuPage} /> 
       </Tab.Navigator>
     </NavigationContainer>
