@@ -20,64 +20,59 @@ export default function FilteredMenuPage({ navigation }: { navigation: any }) {
   : dishes;
 
     return(
-
-<ScrollView style={{ padding: 20 }}> 
-  
-
-   <Text style={styles.Title}>Filters</Text> 
+  <ScrollView 
+      style={styles.scrollBackground}
+      contentContainerStyle={styles.container}>
         <View>
-          <TouchableOpacity
-            style={styles.filters}
-            onPress={handleFilters}
-          >
-             <Text style={styles.filterstext}>Filters</Text> 
-            <Text style={styles.arrow}>
-              {showFilters ? "▼" : "►"}
-              {/* This line changes the arrow direction based on the state of the button */}
-            </Text>
-          </TouchableOpacity> 
-
-          {showFilters && ( 
-            <View>
-              {["Starters","Main course","Dessert"].map(course => (
-                <TouchableOpacity key={course} onPress={() => setActiveFilter(course)}>
-                  <Text style={[
-                    styles.filterstext,
-                    activeFilter === course && { fontWeight: 'bold', color: '#004aad'}
-                  ]}>
-                    {course}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-              
+          <Text style={styles.Title}>Filters</Text>
+          <View>
+            <TouchableOpacity
+             style={styles.filters}
+             onPress={handleFilters} >
+              <Text style={styles.filterTittle}>Filters</Text>
+              <Text style={styles.arrow}>
+                {showFilters ? "▼" : "►"}
+                {/* This line changes the arrow direction based on the state of the button */}
+                </Text>
+            </TouchableOpacity>
+            
+            
+            {showFilters && (
+              <View>
+                {["Starters","Main course","Dessert"].map(course => (
+                  <TouchableOpacity key={course} onPress={() => setActiveFilter(course)}>
+                    <Text style={[styles.filterstext,activeFilter === course && { fontWeight: 'bold', color: '#004aad'}]}>
+                      {course}
+                    </Text>
+                  </TouchableOpacity>))}
+                </View>)}
+          </View>
+          {filterDishes.length === 0 ? (
+            <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20 }} >No dishes match this filter.</Text>
+          ) : (
+            filterDishes.map((dish, index) => (
+            <View key={index} style={styles.card}>
+              <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+              <Text style={styles.dishDescription}>{dish.description}</Text>
+              <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+              <Text style={styles.dishCourse}>Course: {dish.course}</Text>
             </View>
-          )}
-        </View>
+            ))
+            )}
 
-  {filterDishes.length === 0 ? (
-  <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20 }} >No dishes match this filter.</Text>
-
-) : (
-  
-  filterDishes.map((dish, index) => (
-    <View key={index} style={styles.card}>
-       <Text style={styles.dishName}>🍽️ {dish.name}</Text>
-                <Text style={styles.dishDescription}>{dish.description}</Text>
-                <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
-                <Text style={styles.dishCourse}>Course: {dish.course}</Text>
-    </View>
-  )) 
-)}
-</ScrollView>       
-    )
-}
+        </View> 
+  </ScrollView>        
+  )}
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+   scrollBackground: {
+      flex: 1,
+      backgroundColor: '#f5faff',
+    },
+    container: { 
+      paddingBottom: 30, 
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
   Title: {
     fontSize: 24,
     fontWeight:'bold',
@@ -89,6 +84,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: "white",
   }, 
+  filterTittle: {
+     fontSize: 18,
+    fontWeight: "600",
+    color: "white",
+  },
+  
   filters: {
     flexDirection: "row",
     justifyContent: "space-between",

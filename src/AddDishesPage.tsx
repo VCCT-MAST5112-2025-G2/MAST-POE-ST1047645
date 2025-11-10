@@ -32,11 +32,6 @@ export default function Homepage ({ navigation }: { navigation: any }) {
         setNewPrice("");
         setModalVisible(false);
 
-        setconfirmationMessage(true);
-        // Show confirmation popup
-  
-        // Hide it after 2 seconds
-       setTimeout(() => setconfirmationMessage(false), 2000);
       }
     }; 
   
@@ -54,120 +49,101 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     const courses = ["Starters", "Main course", "Dessert"]; 
     
   return (
-  
-  <ScrollView>
-        <View style={styles.container}>
+  <ScrollView 
+    style={styles.scrollBackground}
+    contentContainerStyle={styles.container}>
+    <View>
+      <Text style={{ fontWeight: 'bold', marginTop: 40, fontSize: 18, textAlign: 'center', paddingBottom: 30}}> Click down below to add the dishes</Text> 
+      <TouchableOpacity style={styles.addDishButton}
+       onPress={() => setModalVisible(true)}>
+        <Text style={styles.addDishButtonText}>Add Dish</Text>
+      </TouchableOpacity>
+      <Modal visible={modalVisible} onRequestClose={closeModal}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.Title}> Add Dish Details</Text>
 
-          <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Click down below to add the dishes</Text> 
+            <TextInput
+             style={styles.input}
+             onChangeText={setNewName}
+             value={NewName}
+             placeholder="Enter the dish name"
+            />
+            
+            <TextInput
+              style={styles.input}
+              onChangeText={setNewDescription}
+              value={NewDescription}
+              placeholder="Enter the dish description"
+            />
+            
+            <TextInput
+             style={styles.input}
+             onChangeText={setNewPrice}
+             value={NewPrice}
+             placeholder="Enter the dish price"
+             keyboardType= "numeric"
+            />
+            
+            <Text style={{fontWeight: 'bold', marginBottom: 10}}>Select course</Text>
+            <View style={styles.coursesButtonsContainer}>
+              {courses.map((course) =>{
+                const isSelected = NewCourse === course;
+                return(
+                <TouchableOpacity
+                 key={course}
+                 onPress={() => setNewCourse(course)}
+                 style={[styles.coursesButton, isSelected && styles.courseButtonSelected]}>
+                  <Text style={isSelected ? styles.coursesButtonTextSelected : styles.courseButtonText}>
+                    {course}
+                  </Text>
+                </TouchableOpacity>)})} 
+              </View>
+              
+              <View style={styles.modalButtons}>
+                <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                  
+                <TouchableOpacity style={styles.addDishButton} onPress={HandleAddDish}>
+                  <Text style={styles.addDishButtonText}>Add Dish</Text>
+                </TouchableOpacity>
   
-          <TouchableOpacity style={styles.addDishButton} 
-          onPress={() => setModalVisible(true)}>
-            <Text style={styles.addDishButtonText}>Add Dish</Text>
-          </TouchableOpacity>  
-  
-  
-          <Modal visible={modalVisible} onRequestClose={closeModal}>
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <Text style={styles.Title}> Add Dish Details</Text>
-                <TextInput
-                  style={styles.input}
-                  onChangeText={setNewName}
-                  value={NewName}
-                  placeholder="Enter the dish name"
-                  />
-  
-                <TextInput 
-                style={styles.input}
-                onChangeText={setNewDescription}
-                value={NewDescription}
-                placeholder="Enter the dish description"
-                />
-  
-                <TextInput
-                style={styles.input}
-                onChangeText={setNewPrice}  
-                value={NewPrice}
-                placeholder="Enter the dish price"
-                keyboardType= "numeric" 
-                />
-  
-                <Text style={{fontWeight: 'bold', marginBottom: 10}}>Select course</Text>
-                <View style={styles.coursesButtonsContainer}>
-                  {courses.map((course) =>{ 
-                    const isSelected = NewCourse === course;
-                    return(
-                      <TouchableOpacity
-                      key={course}
-                      onPress={() => setNewCourse(course)}
-                      style={[
-                        styles.coursesButton, 
-                        isSelected && styles.courseButtonSelected
-                      ]}
-                      >
-                        <Text style={isSelected ? styles.coursesButtonTextSelected : styles.courseButtonText}>
-                          {course}
-                        </Text>
-                      </TouchableOpacity>
-                    )
-  
-                  })} 
-                </View>
-  
-                <View style={styles.modalButtons}>
-                  <TouchableOpacity style={styles.cancelButton} onPress={closeModal}>
-                    <Text style={styles.cancelButtonText}>Cancel</Text> 
-  
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.addDishButton} onPress={HandleAddDish}>
-                    <Text style={styles.addDishButtonText}>Add Dish</Text>
-                  </TouchableOpacity>
-  
-                </View>
               </View>
             </View>
-          </Modal>
-          {confirmationMessage && (
-  <View style={styles.confirmationPopup}>
-    <Text style={styles.confirmationText}>✅ Dish added! Check it in the filter tab.</Text>
-  </View> 
-)}
+          </View>
+        </Modal>
+        
+        {dishes.map((dish, index) => {
+          const isSelected = selectedDishes.some(d => d.name === dish.name);
+          return (
+          <TouchableOpacity
+           key={index}
+           onPress={() => toggleDishSelection(dish)}
+           style={[styles.dishItem,isSelected && styles.selectedDishItem]}>
+            
+            <Text style={styles.dishName}>🍽️ {dish.name}</Text>
+            <Text style={styles.dishDescription}>{dish.description}</Text>
+            <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
+            <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
+            <TouchableOpacity
+             style={styles.deleteButton}
+             onPress={() => removeDish(dish.name)}>
+              <Text style={styles.deleteText}>Delete</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>);})}
   
-          {dishes.map((dish, index) => { 
-    const isSelected = selectedDishes.some(d => d.name === dish.name);
-    return (
-     <TouchableOpacity
-        key={index}
-        onPress={() => toggleDishSelection(dish)}
-        style={[
-          styles.dishItem,
-          isSelected && styles.selectedDishItem
-        ]}
-      >
-        <Text style={styles.dishName}>🍽️ {dish.name}</Text> 
-        <Text style={styles.dishDescription}>{dish.description}</Text>
-        <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text> 
-        <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
-
-         <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={() => removeDish(dish.name)}
-                  >
-                    <Text style={styles.deleteText}>Delete</Text>
-                  </TouchableOpacity>
-      </TouchableOpacity>
-    );
-  })}
-  
-   </View>  
- </ScrollView>
-    );
+    </View>  
+  </ScrollView>
+  );
   }
-  
   const styles = StyleSheet.create({
-    container: {
+    scrollBackground: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#f5faff',
+    },
+    container: { 
+      paddingBottom: 30, 
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -185,7 +161,8 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    marginTop: 20,
+    marginTop: 30,
+
   },
   
   addDishButtonText: {
@@ -217,6 +194,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       borderRadius: 5,
       padding: 20,
       marginBottom: 10,
+      
     },
     modalOverlay:{
       flex: 1, 
@@ -260,44 +238,60 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   courseButtonText: {
     color: '#004aad',
   },
-   // Styling for the selected items after the user input
-    dishItem: {
+  
+   dishItem: {
     padding: 15,
     marginVertical: 8,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
     width: '90%',
+    alignSelf: 'center',
+    marginTop: 35,
   },
+
   selectedDishItem: {
    backgroundColor:"#87CEEB", 
-  }, // End of styling 
+  }, 
 
-  // Styling for the dish cards after the user input 
-  dishName: {
+  
+ dishName: {
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+    paddingBottom: 8,
   },
+
   dishDescription: {
     fontStyle: 'italic',
-    color: '#555',
+    color: 'black',
+    textAlign:'center', 
   },
   dishPrice: {
     color: '#333',
     marginTop: 4,
+    paddingBottom: 8,
+    textAlign: 'center',
+    fontWeight: 'bold', 
   },
+
   dishCourse: {
     color: '#004aad',
     fontWeight: '600',
     marginTop: 4,
+    paddingBottom: 8,
+    textAlign: 'center',
   }, 
-   deleteButton: { marginTop: 10,
+
+   deleteButton: { 
+    marginTop: 10,
      backgroundColor: '#004aad', 
      padding: 5, 
      borderRadius: 5
      },
   deleteText: { 
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: 'bold',
    }, 
   // End of styling 
   confirmationPopup: {
@@ -314,9 +308,7 @@ confirmationText: {
   fontWeight: 'bold',
   textAlign: 'center',
 },
-
-  
-  }
-  );
+}
+);
   
     

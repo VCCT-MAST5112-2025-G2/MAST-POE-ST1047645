@@ -26,52 +26,70 @@ export default function Homepage ({ navigation }: { navigation: any }) {
 
     
   return (
-  <ScrollView style={styles.container}>
+  <ScrollView 
+   style={styles.scrollBackground}
+    contentContainerStyle={styles.container}>
     <View> 
       <Text style={styles.WelcomeText}> Welcome Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal!</Text>
-      <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}> Below the dishes that you added will be displayed </Text>
+      
       {dishes.length === 0 ? (
-        <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20, fontSize: 18 }}>No added dishes yet.</Text>) : ( 
         <>
+        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
+          Below the dishes that you added will be displayed.
+        </Text>
+        
+        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}>
+          No dishes added yet.
+        </Text>
+        </>
+        ) : (
+        
+        <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 25, textAlign: 'center', color: "#004aad"  }}>
+          Your memu
+        </Text>
+      )} 
+
+
         {dishes.map((dish, index) => {
           const isSelected = selectedDishes.some(d => d.name === dish.name);
           return (
           <TouchableOpacity
           key={index}
           onPress={() => toggleDishSelection(dish)}
-          style={[
-            styles.dishItem,
-            isSelected && styles.selectedDishItem
-          ]}
-        >
+          style={[styles.dishItem,isSelected && styles.selectedDishItem ]}>
+         
           <Text style={styles.dishName}>🍽️ {dish.name}</Text>
           <Text style={styles.dishDescription}>{dish.description}</Text>
           <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
           <Text style={styles.dishCourse}>Course: {dish.course}</Text>
+          
          
         </TouchableOpacity> );
       })}
-      <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 10, paddingBottom: 30, fontSize: 18 }}>
+      <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 115, paddingBottom: 15, fontSize: 18, textAlign: 'center' }}>
         Selected dishes: {selectedDishes.length}
         </Text>
         <Text style={{ fontWeight: 'bold', marginTop: 10, padding: 10, paddingBottom: 35, fontSize: 18, textAlign: 'center'}}>
           Average price of the selected price: R{averagePrice.toFixed(2)} 
           </Text>
-          </>
-        )}
+          
+        
     </View>  
   </ScrollView> 
     );
   }
   
   const styles = StyleSheet.create({
-    container: {
-    flex: 1,
-    backgroundColor: '#f5faff', // softer background
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-  },
-   //backgroundColor: '#87CEEB', 
+    scrollBackground: {
+      flex: 1,
+      backgroundColor: '#f5faff',
+    },
+    container: { 
+      paddingBottom: 30, 
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+   //backgroundColor: '#87CEEB' 
     WelcomeText: {
       fontSize: 20,
       fontWeight: 'bold',
@@ -84,38 +102,50 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       fontWeight: 'bold',
       padding: 15, 
     },
-   // Styling for the selected items after the user input
+   // Styling for dish cards and it's components
     dishItem: {
     padding: 15,
     marginVertical: 8,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
     width: '90%',
+    alignSelf: 'center',
   },
-  selectedDishItem: {
-   backgroundColor:"#E6E6FA",  
-  }, // End of styling 
 
-  // Styling for the dish cards after the user input 
+  selectedDishItem: {
+   backgroundColor:"#4682B4",  // or #CBC3E3 OR #E6E6FA OR #AFDBF5
+  }, 
+
   dishName: {
+    textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+    paddingBottom: 8,
   },
+
   dishDescription: {
     fontStyle: 'italic',
-    color: 'black', 
+    color: 'black',
+    textAlign:'center', 
   },
   dishPrice: {
     color: '#333',
     marginTop: 4,
+    paddingBottom: 8,
+    textAlign: 'center',
+    fontWeight: 'bold', 
   },
+
   dishCourse: {
     color: '#004aad',
     fontWeight: '600',
     marginTop: 4,
+    paddingBottom: 8,
+    textAlign: 'center',
   }, 
-  deleteButton: { marginTop: 10, backgroundColor: '#004aad', padding: 5, borderRadius: 5 },
-  deleteText: { color: 'white', textAlign: 'center' },
+
+  
+  
   // End of styling 
   
   
