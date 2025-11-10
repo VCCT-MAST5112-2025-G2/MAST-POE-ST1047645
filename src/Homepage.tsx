@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
+
 import React, { useState } from 'react'; 
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, TextInput, Modal } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
 import { useDishes } from './Globalstore';
 
 
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-  const {dishes, addDish, removeDish} = useDishes(); 
+  const {dishes } = useDishes(); 
 
     const [selectedDishes, setSelectedDishes] = useState<Array<{name: String; description: String; price: number;}>>([]); // State to track selected dishes 
   
@@ -20,24 +20,23 @@ export default function Homepage ({ navigation }: { navigation: any }) {
       setSelectedDishes(prev => [...prev, dish]);
     }
   };
-    
-     
+
+  const averagePrice = selectedDishes.length > 0
+  ? selectedDishes.reduce((sum, dish) => sum + dish.price, 0) / selectedDishes.length : 0;
+
     
   return (
-  
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.WelcomeText}> Welcome, Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal.</Text>
-
-          <Text style={{ fontWeight: 'bold', marginTop: 20 }}> Below the dishes that you added will be displayed </Text>
-
-          {dishes.length === 0 ? (
-  <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}>No added dishes yet.</Text>) : ( 
-  <>
-    {dishes.map((dish, index) => {
-      const isSelected = selectedDishes.some(d => d.name === dish.name);
-      return (
-        <TouchableOpacity
+  <ScrollView style={styles.container}>
+    <View> 
+      <Text style={styles.WelcomeText}> Welcome Christofell 🧑🏼‍🍳, let's plan together a well-balanced meal!</Text>
+      <Text style={{ fontWeight: 'bold', marginTop: 8, fontSize: 18, textAlign: 'center' }}> Below the dishes that you added will be displayed </Text>
+      {dishes.length === 0 ? (
+        <Text style={{ fontWeight: 'bold', textAlign: 'center', marginTop: 20, fontSize: 18 }}>No added dishes yet.</Text>) : ( 
+        <>
+        {dishes.map((dish, index) => {
+          const isSelected = selectedDishes.some(d => d.name === dish.name);
+          return (
+          <TouchableOpacity
           key={index}
           onPress={() => toggleDishSelection(dish)}
           style={[
@@ -49,126 +48,42 @@ export default function Homepage ({ navigation }: { navigation: any }) {
           <Text style={styles.dishDescription}>{dish.description}</Text>
           <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text>
           <Text style={styles.dishCourse}>Course: {dish.course}</Text>
-          <TouchableOpacity
-            style={styles.deleteButton}
-            onPress={() => removeDish(dish.name)}
-          >
-            <Text style={styles.deleteText}>Delete</Text>
-          </TouchableOpacity>
-        </TouchableOpacity>
-      );
-    })}
-
-    <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 10, paddingBottom: 30 }}>
-      Selected dishes: {selectedDishes.length}
-    </Text>
-  </>
-)} 
-  
-        </View>  
          
-         
-          <StatusBar style="auto" />
-      
-      </ScrollView>
+        </TouchableOpacity> );
+      })}
+      <Text style={{ fontWeight: 'bold', marginTop: 20, padding: 10, paddingBottom: 30, fontSize: 18 }}>
+        Selected dishes: {selectedDishes.length}
+        </Text>
+        <Text style={{ fontWeight: 'bold', marginTop: 10, padding: 10, paddingBottom: 35, fontSize: 18, textAlign: 'center'}}>
+          Average price of the selected price: R{averagePrice.toFixed(2)} 
+          </Text>
+          </>
+        )}
+    </View>  
+  </ScrollView> 
     );
   }
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
+    flex: 1,
+    backgroundColor: '#f5faff', // softer background
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+   //backgroundColor: '#87CEEB', 
     WelcomeText: {
-      fontSize: 15,
+      fontSize: 20,
       fontWeight: 'bold',
       margin: 10,
       textAlign: 'center', 
       padding: 30,
     }, 
-
-    addDishButton: {
-    backgroundColor: '#004aad', 
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  
-  addDishButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  
-  cancelButton: {
-     backgroundColor: '#004aad', 
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginTop: 20,
-  },
-  
-  cancelButtonText: { 
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  
-  
-    input: {
-      borderWidth: 1,
-      borderColor: "#004aad",
-      borderRadius: 5,
-      padding: 20,
-      marginBottom: 10,
-    },
-    modalOverlay:{
-      flex: 1, 
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-    },
-    modalContent:{
-      width: '80%',
-      padding: 20,
-      backgroundColor: 'white',
-      borderRadius: 10, 
-    },
     Title: {
       fontSize: 25,
       fontWeight: 'bold',
       padding: 15, 
     },
-    modalButtons: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-       
-    }, 
-    coursesButtonsContainer:{
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginBottom: 15,
-    },
-    coursesButton: {
-    padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#004aad',
-  },
-  courseButtonSelected: {
-    backgroundColor: '#004aad',
-  },
-  coursesButtonTextSelected: {
-    color: 'white'
-  },
-  courseButtonText: {
-    color: '#004aad',
-  },
    // Styling for the selected items after the user input
     dishItem: {
     padding: 15,
@@ -178,7 +93,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     width: '90%',
   },
   selectedDishItem: {
-   backgroundColor:"#87CEEB", 
+   backgroundColor:"#E6E6FA",  
   }, // End of styling 
 
   // Styling for the dish cards after the user input 
@@ -188,7 +103,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   },
   dishDescription: {
     fontStyle: 'italic',
-    color: '#555',
+    color: 'black', 
   },
   dishPrice: {
     color: '#333',

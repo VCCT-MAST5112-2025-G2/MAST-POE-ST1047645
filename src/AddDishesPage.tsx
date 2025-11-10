@@ -4,7 +4,7 @@ import { useDishes } from './Globalstore';
 
 export default function Homepage ({ navigation }: { navigation: any }) {
 
-  const {dishes, addDish} = useDishes();
+  const {dishes,removeDish, addDish} = useDishes();
   const [ confirmationMessage, setconfirmationMessage ] = useState(false); 
 
     const [NewName, setNewName] = useState(''); 
@@ -130,17 +130,31 @@ export default function Homepage ({ navigation }: { navigation: any }) {
           {confirmationMessage && (
   <View style={styles.confirmationPopup}>
     <Text style={styles.confirmationText}>✅ Dish added! Check it in the filter tab.</Text>
-  </View>
+  </View> 
 )}
-
-
   
           {dishes.map((dish, index) => { 
     const isSelected = selectedDishes.some(d => d.name === dish.name);
     return (
-      <TouchableOpacity>
-        <Text style={styles.Title}>🍽️ The dish was added! Take a look in the filter!</Text> 
-       
+     <TouchableOpacity
+        key={index}
+        onPress={() => toggleDishSelection(dish)}
+        style={[
+          styles.dishItem,
+          isSelected && styles.selectedDishItem
+        ]}
+      >
+        <Text style={styles.dishName}>🍽️ {dish.name}</Text> 
+        <Text style={styles.dishDescription}>{dish.description}</Text>
+        <Text style={styles.dishPrice}>Price: R{dish.price.toFixed(2)}</Text> 
+        <Text style= {styles.dishCourse}>Course: {dish.course}</Text>
+
+         <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => removeDish(dish.name)}
+                  >
+                    <Text style={styles.deleteText}>Delete</Text>
+                  </TouchableOpacity>
       </TouchableOpacity>
     );
   })}
@@ -276,6 +290,15 @@ export default function Homepage ({ navigation }: { navigation: any }) {
     fontWeight: '600',
     marginTop: 4,
   }, 
+   deleteButton: { marginTop: 10,
+     backgroundColor: '#004aad', 
+     padding: 5, 
+     borderRadius: 5
+     },
+  deleteText: { 
+    color: 'white',
+    textAlign: 'center'
+   }, 
   // End of styling 
   confirmationPopup: {
   position: 'absolute',
