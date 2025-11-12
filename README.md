@@ -31,7 +31,7 @@ Scan the QR code that appears with the Expo Go app on your phone
 
 # Uppdated Youtube link 
 
-https://youtube.com/shorts/AoIR6E3qTY0?si=xERhBStVgsMZf4fg
+[https://youtube.com/shorts/AoIR6E3qTY0?si=xERhBStVgsMZf4fg](https://youtube.com/shorts/67bp22ryO6E?si=zYQdSe7W36qy6mme)
 
 # Change log 
 
