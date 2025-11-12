@@ -25,6 +25,9 @@ export default function Homepage ({ navigation }: { navigation: any }) {
   ? selectedDishes.reduce((sum, dish) => sum + dish.price, 0) / selectedDishes.length : 0;
   //Calculations for the average price
 
+
+  
+
     
   return (
   <ScrollView 
@@ -70,7 +73,7 @@ export default function Homepage ({ navigation }: { navigation: any }) {
         Selected dishes: {selectedDishes.length}
         </Text>
         <Text style={{ fontWeight: 'bold', marginTop: 10, padding: 10, paddingBottom: 35, fontSize: 18, textAlign: 'center'}}>
-          Average price of the selected price: R{averagePrice.toFixed(2)} 
+          Average price of the selected dishes: R{averagePrice.toFixed(2)}  
           </Text>
           
         
