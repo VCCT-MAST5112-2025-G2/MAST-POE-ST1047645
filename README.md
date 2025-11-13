@@ -16,18 +16,18 @@ https://github.com/st10476645/MAST-POE-ST1047645.git
 
 ### To get the project
 
-Go to this link https://github.com/st10476645/MAST-POE-ST1047645.git
-Download ZIP file
-Extract the ZIP file
-Open a terminal in that extracted folder
-Run the command npm i in the intergrated terminal of the App.tsx to get all of the app dependencies
+- Go to this link https://github.com/st10476645/MAST-POE-ST1047645.git
+- Download ZIP file
+- Extract the ZIP file
+- Open a terminal in that extracted folder
+- Run the command npm i in the intergrated terminal of the App.tsx to get all of the app dependencies
 
 ### To test 
 
-In the intergrated terminal of the App.tsx run the following commands
+- In the intergrated terminal of the App.tsx run the following commands
 npx expo start ( not using the vm )
 or npx expo start --tunnel ( using the vm ) 
-Scan the QR code that appears with the Expo Go app on your phone
+- Scan the QR code that appears with the Expo Go app on your phone
 
 # Uppdated Youtube link 
 
